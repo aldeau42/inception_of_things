@@ -20,17 +20,29 @@ PARTS
 -------------------------
 DOCUMENTATION & RESOURCES
 -------------------------
-- K8s: https://kubernetes.io/
-- K3s: https://k3s.io/
-- K3d: https://k3d.io/stable/
+- K8s: 
+https://kubernetes.io/
+- K3s: 
+https://k3s.io/
+- K3d: 
+https://k3d.io/stable/
 
-- Kubernetes: https://kubernetes.io/docs/home/
-- Tuto: https://kubernetes.io/docs/concepts/
+- Kubernetes:
+https://kubernetes.io/docs/home/
+- Tuto: 
+https://kubernetes.io/docs/concepts/
 - Cluster Architecture  (Cf. illustration): 
 https://kubernetes.io/docs/concepts/architecture/
 
-- [YT] Cours K8s: https://www.youtube.com/watch?v=2T86xAtR6Fo
-- [YT] Intro to K3s Online Training: https://www.youtube.com/watch?v=vRjk3r9fwFo
+- Vagrantfile: 
+https://developer.hashicorp.com/vagrant/docs/vagrantfile
+- K3s CLI Tools:
+https://docs.k3s.io/cli
+
+- [YT] Cours K8s: 
+https://www.youtube.com/watch?v=2T86xAtR6Fo
+- [YT] Intro to K3s Online Training: 
+https://www.youtube.com/watch?v=vRjk3r9fwFo
 
 
 -----------
@@ -52,6 +64,17 @@ Ingress is a powerful tool for managing external access to services in a Kuberne
 
 - Argo CD:
 Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It is designed to help manage and deploy applications on Kubernetes clusters by using Git repositories as the source of truth for defining the desired application state.
+
+
+********************************************************
+- Docker vs Kubernetes
+********************************************************
+
+Docker is primarily focused on the creation, management, and running of individual containers. It is often used for development and deployment of containerized applications.
+
+Kubernetes is focused on the orchestration and management of containerized applications at scale. It is used to manage clusters of containers, ensuring high availability, scalability, and self-healing capabilities.
+
+In many environments, Docker and Kubernetes are used together. Docker is used to build and manage container images, while Kubernetes is used to orchestrate and manage the deployment of those containers in a production environment.
 
 
 ********************************************************
@@ -141,8 +164,63 @@ Key Functions:
 - Resource Management: Manages the resources (CPU, memory, storage) allocated to pods and containers.
 
 
+------------
+INSTALLATION
+------------
+
+# --- k3s ---
+
+    // INSTALLATION
+sudo apt update && sudo apt upgrade -y
+curl -sfL https://get.k3s.io | sh -
+
+    // STATUS VERIFICATION
+sudo kubectl get nodes
+
+    // ACCESSING K8S CLUSTER
+mkdir -p ~/.kube
+sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+sudo chown $(id -u):$(id -g) ~/.kube/config
+
+    // OPTIONS
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.3+k3s1 sh -s - --write-kubeconfig-mode 644
+
+    // UNINSTALL
+sudo /usr/local/bin/k3s-uninstall.sh
+
+    // GET STARTED
+sudo k3s server &
+* Kubeconfig is written to /etc/rancher/k3s/k3s.yaml
+sudo k3s kubectl get node
+* On a different node run the below command. 
+* NODE_TOKEN comes from /var/lib/rancher/k3s/server/node-token on your server
+sudo k3s agent --server https://myserver:6443 --token ${NODE_TOKEN}
+-----------------------------------------------------------------------
+
+# --- Vagrant ---
+    // INSTALLATION
+wget https://releases.hashicorp.com/vagrant/2.4.6/vagrant_2.4.6-1_amd64.deb
+sudo apt install ./vagrant_2.4.6-1_amd64.deb
+
+    // COMMANDS
+vagrant init
+vagrant up
+vagrant status
+vagrant halt
+vagrant destroy
+- To access the VM -
+    vagrant ssh aderouinS
+    vagrant ssh aderouinSW
+
+////
+Wait for K3s to finish initializing
+K3s runs asynchronously after installation. So immediately accessing /etc/rancher/k3s/k3s.yaml or /var/lib/rancher/k3s/server/node-token often fails.
+
+➡️ Add a wait loop in your provision script to ensure K3s finishes booting:
+////
+
 ///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
+/// MANDATORY             ////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 
 ==========
