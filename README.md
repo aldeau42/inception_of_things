@@ -197,6 +197,12 @@ sudo k3s kubectl get node
 sudo k3s agent --server https://myserver:6443 --token ${NODE_TOKEN}
 -----------------------------------------------------------------------
 
+# --- Pre ---
+Use VM
+Modify settings: 2 boxes to check
+Install virtualbox
+
+
 # --- Vagrant ---
     // INSTALLATION
 wget https://releases.hashicorp.com/vagrant/2.4.6/vagrant_2.4.6-1_amd64.deb
@@ -211,6 +217,7 @@ vagrant destroy
 - To access the VM -
     vagrant ssh aderouinS
     vagrant ssh aderouinSW
+
 
 ////
 Wait for K3s to finish initializing

@@ -15,7 +15,7 @@ while [ ! -f /var/lib/rancher/k3s/server/node-token ]; do
 done
 
 # Share the token with the worker node
-cat /var/lib/rancher/k3s/server/node-token > /tmp/node-token
+sudo cat /var/lib/rancher/k3s/server/node-token > /tmp/node-token
 
 # Wait for kubeconfig to be available
 while [ ! -f /etc/rancher/k3s/k3s.yaml ]; do
