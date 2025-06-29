@@ -1,12 +1,11 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "generic/alpine318"
   config.vm.box_version = "4.3.12"
-  config.vm.synced_folder "/tmp", "/vagrant_tmp"
-
+  config.vm.synced_folder "./shared", "/vagrant_shared"
 
   config.vm.define "aderouinS" do |aderouinS|
     aderouinS.vm.hostname = "aderouinS"
-    aderouinS.vm.network "private_network", ip: "192.168.56.110", virtualbox__intnet: "eth1"
+    aderouinS.vm.network "private_network", ip: "192.168.56.110"
     aderouinS.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.cpus = 1
@@ -16,7 +15,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "aderouinSW" do |aderouinSW|
     aderouinSW.vm.hostname = "aderouinSW"
-    aderouinSW.vm.network "private_network", ip: "192.168.56.111", virtualbox__intnet: "eth1"
+    aderouinSW.vm.network "private_network", ip: "192.168.56.111"
     aderouinSW.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.cpus = 1

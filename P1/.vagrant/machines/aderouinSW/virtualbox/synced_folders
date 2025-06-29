@@ -1,1 +1,1 @@
-{"virtualbox":{"/vagrant_tmp":{"guestpath":"/vagrant_tmp","hostpath":"/tmp","disabled":false,"__vagrantfile":true}}}
+{"virtualbox":{"/vagrant_shared":{"guestpath":"/vagrant_shared","hostpath":"/home/user/42/inception_of_things/P1/shared","disabled":false,"__vagrantfile":true}}}
