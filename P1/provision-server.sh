@@ -24,9 +24,7 @@ YML="/etc/rancher/k3s/k3s.yaml"
 # Share the token with the worker node
 mkdir -p /vagrant_shared
 cp ${NODE_TOKEN} /vagrant_shared/node-token
-
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+cp ${YML} /vagrant_shared/k3s.yaml
 
 # Wait for kubeconfig to be available
 while [ ! -f ${YML} ]; do
@@ -37,6 +35,6 @@ done
 mkdir -p /home/vagrant/.kube
 cp /etc/rancher/k3s/k3s.yaml /home/vagrant/.kube/config
 chown vagrant:vagrant /home/vagrant/.kube/config
-sed -i 's/127.0.0.1/192.168.56.110/g' /home/vagrant/.kube/config
+
 
 
