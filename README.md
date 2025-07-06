@@ -199,9 +199,9 @@ sudo k3s agent --server https://myserver:6443 --token ${NODE_TOKEN}
 
 # --- Pre ---
 Use VM
+to have a ssh key
 Modify settings: 2 boxes to check
 Install virtualbox
-
 
 # --- Vagrant ---
     // INSTALLATION
@@ -258,4 +258,67 @@ SUBJECT
 COMMANDS
 --------
 
+launch
+------
+vagrant up
+vagrant ssh aderouinS
+kubectl get nodes -o wide
+
+clean
+-----
+rm -rf ~/.vagrant
+~/VirtualBox VMs/ rm -rf *
+virtualbox (--> remove all boxes and clean the trash)
+
+
+
+==========
+  PART 2
+==========
+
+-------
+SUBJECT
+-------
+- 1 machine
+
+
+- Vagrantfile (latest stable version | distribution of our choice [OS] | to set up according "modern practices")
+- resources: 1 CPU | 512MB RAM (or 1024MB)
+- expected specs:
+    * 1st machine = {login}S  = aderouinS   // S = Server
+    * aderouinS (eth1) = 192.168.56.110
+    * K3s installed on it in SERVER MODE
+    
+    * 3 web applications of your choice that will run in your K3s instance
+    * to be able to access them depending on the HOST used when making a request to the IP address 192.168.56.11
+
+--------
+COMMANDS
+--------
+
+launch
+------
+vagrant up
+vagrant ssh aderouinS
+kubectl get nodes -o wide
+kubectl get all -n kube-system
+curl -H "Host:app2.com" 192.168.42.110
+
+clean
+-----
+rm -rf ~/.vagrant
+~/VirtualBox VMs/ rm -rf *
+virtualbox (--> remove all boxes and clean the trash)
+
+
+==========
+  PART 3
+==========
+
+-------
+SUBJECT
+-------
+
+Install k3d :
+curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
