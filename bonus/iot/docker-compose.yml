@@ -1,0 +1,13 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: gitlab.local
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab.local:9182'
+        gitlab_rails['initial_root_password'] = 'Zxcvbnm,./123'
+    ports:
+      - 9182:9182   # Web UI
+
