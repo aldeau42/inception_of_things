@@ -1,3 +1,5 @@
+all:
+	vagrant up
 
 clean:
 	rm -rf .vagrant

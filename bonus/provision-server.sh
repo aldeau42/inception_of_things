@@ -1,15 +1,9 @@
-# _____________________________
-# commade pour recupere le mdp
-# kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
-# _____________________________
-
 # Install k3d and kubectl
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
-
 curl -LO "https://dl.k8s.io/release/v1.30.1/bin/linux/amd64/kubectl"
 chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 
-# Install Argo CD CLI (add this block)
+# Install Argo CD CLI
 VERSION=$(curl --silent "https://api.github.com/repos/argoproj/argo-cd/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
 curl -sSL -o argocd "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64"
 chmod +x argocd
@@ -21,6 +15,7 @@ k3d cluster create iot-cluster --api-port 6550 -p "8888:80@loadbalancer"
 # Create namespaces
 kubectl create namespace argocd
 kubectl create namespace dev
+kubectl create namespace gitlab
 
 # Install Argo CD
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
